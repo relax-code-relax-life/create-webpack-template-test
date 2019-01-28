@@ -1,3 +1,5 @@
+import '@babel/polyfill'
+
 const name = 'wwl';
 
 class People {
@@ -10,9 +12,9 @@ console.log('assign',Object.assign({},{ name:'extend' }))
 
 console.log('Map',new Map())
 
-// async function test(){
-//     await Promise.resolve();
-// }
+async function test(){
+    await Promise.resolve();
+}
 
 export default People;
 
