@@ -28,7 +28,7 @@ module.exports = {
                 uglifyOptions: {
                     output: {
                         comments: false,
-                        preamble: banner,
+                        // preamble: banner,
                         beautify: false,
                         ascii_only: true
                     },
@@ -41,7 +41,8 @@ module.exports = {
                     warnings: true
                 }
             }),
-            new OptimizeCSSAssetsPlugin({})
+            new OptimizeCSSAssetsPlugin({}),
+            new webpack.BannerPlugin({banner: banner, raw: true})
         ],
 
     },
@@ -159,7 +160,6 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: "[name][hash:8].css",
             chunkFilename: "[id][hash:8].css"
-        }),
-        new webpack.BannerPlugin({banner: banner, raw: true})
+        })
     ]
 }
