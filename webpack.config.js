@@ -85,7 +85,7 @@ module.exports = {
                                 targets: {"ie": "9"},
                                 loose: true,
                                 modules: false,
-                                useBuiltIns: 'entry'
+                                useBuiltIns: 'usage'
                                 // targets: {chrome:58} | "> 5% in alt-AS" | "> 5%" | "cover 99.5%" | "last 2 major versions"
                                 //          valid environments: chrome, opera, edge, firefox, safari, ie, ios, android, node, electron
                                 // modules  "amd" | "umd" | "systemjs" | "commonjs" | "cjs" | "auto" | false
