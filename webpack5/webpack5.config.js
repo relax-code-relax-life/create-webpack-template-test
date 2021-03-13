@@ -7,24 +7,26 @@ const HTMLInlineCSSWebpackPlugin = require("html-inline-css-webpack-plugin").def
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require("terser-webpack-plugin");
 
+const isDev = false;
+
 const banner = '/*! this is banner */';
 
 module.exports = {
-    mode: 'production',
-    // mode: 'none',
+    mode: isDev ? 'none' : 'production',
+    watch: isDev,
     entry: {
         // home: resolve(__dirname, 'src/app.js'), //这里如果是相对路径，是相对于代码运行的process.cwd()
         home: resolve(__dirname, 'src/a.ts')
     },
     output: {
         clean: true,
-        filename: "[name][contenthash].js", // 测试，在a.js中引入css和删除css，打包出的home.js的contenthash保持不变
+        filename: isDev ? '[name].js' : '[name][contenthash].js', // 测试，在a.js中引入css和删除css，打包出的home.js的contenthash保持不变
         path: resolve(__dirname, './dist'), // webpack要求必须绝对路径
         publicPath: "./"
     },
     plugins: [
-        new MiniCssExtractPlugin({
-            filename: '[name][contenthash].css'
+        new MiniCssExtractPlugin({  // 只有mode是production的时候才会真正执行
+            filename: isDev ? '[name].css' : '[name][contenthash].css'
         }),
         new HtmlWebpackPlugin({
             filename: 'index.html',
@@ -72,6 +74,7 @@ module.exports = {
                 test: /\.tsx?$/,
                 use: ['ts-loader'],
                 exclude: /node_modules/,
+                // include: resolve(__dirname, './src'),
                 // 如果使用了babel，则就不使用ts-loader，
                 //  而是使用babel里的 @babel/plugin-transform-typescript或@babel/preset-typescript
             },
