@@ -12,3 +12,8 @@ webpack webpack-cli babel-loader @babel/core @babel/preset-env @babel/plugin-tra
 
 webpack --config webpack.config.js
 
+# webpack5
+```
+npm install webpack webpack-cli --save-dev
+```
+
