@@ -1,10 +1,13 @@
 const {resolve} = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin');
 const HTMLInlineCSSWebpackPlugin = require("html-inline-css-webpack-plugin").default;
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require("terser-webpack-plugin");
+
+const banner = '/*! this is banner */';
 
 module.exports = {
     mode: 'production',
@@ -37,7 +40,10 @@ module.exports = {
         //     },
         //     leaveCSSFile: false     // 如果为true，会在dist/中保留内联的css文件，如果为false，会把已内联的css文件从dist/中删除
         // }),
-
+        new webpack.BannerPlugin({
+            banner: banner,
+            raw: true
+        })
     ],
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
@@ -74,8 +80,13 @@ module.exports = {
     optimization: {
         minimizer: [
             // 默认TerserPlugin不去除console.*
-            // new TerserPlugin({terserOptions: {compress: {drop_console: true}}}),
-            '...',
+            new TerserPlugin({
+                terserOptions: {
+                    compress: {drop_console: true}
+                },
+                extractComments: false
+            }),
+            // '...',
             new CssMinimizerPlugin()
         ]
         // 如果不需要单独指定TerserPlugin，则可以使用 [ '...', new CssMinimizerPlugin() ]
